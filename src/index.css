@@ -1,5 +1,5 @@
 .header {
-  background-color: #e6e6fa; /* Light purple background color */
+  background-color: #f8e6fa; /* Light purple background color */
   padding: 10px; /* Reduced padding */
   border-radius: 15px; /* Smaller border radius */
   font-family: 'Roboto', sans-serif; 
@@ -9,11 +9,11 @@
   width: 300px;
 }
 body {
-  background-color: aliceblue;
+  background-color: rgb(232, 193, 246);
 }
 
 .to-do-list {
-  font-family: Arial, sans-serif;
+  font-family: 'Cute', sans-serif;
   text-align: center;
   margin-top: 100px;
 }
@@ -125,9 +125,9 @@ input[type="checkbox"]:checked::before {
 }
 .uncompleted-button {
   margin-right: 5rem;
-  background-color: rgb(232, 138, 138)
+  background-color: rgb(210, 119, 228)
 }
 .completed-button {
   margin-left: 5rem;
-  background-color: rgb(144, 230, 195)
+  background-color: rgb(222, 128, 231)
 }
