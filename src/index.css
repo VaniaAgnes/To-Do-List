@@ -110,7 +110,7 @@ input[type="checkbox"]::before {
 }
 
 input[type="checkbox"]:checked::before {
-  background-color: transparent;
+  background-color: rgb(127, 59, 135);
 }
 
 
