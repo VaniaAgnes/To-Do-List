@@ -1,0 +1,133 @@
+.header {
+  background-color: #e6e6fa; /* Light purple background color */
+  padding: 10px; /* Reduced padding */
+  border-radius: 15px; /* Smaller border radius */
+  font-family: 'Roboto', sans-serif; 
+  font-size: 1rem; 
+  color: #333; 
+  font-weight: bold; 
+  width: 300px;
+}
+body {
+  background-color: aliceblue;
+}
+
+.to-do-list {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin-top: 100px;
+}
+
+h1 {
+  font-size: 4rem;
+  color: black;
+}
+
+button {
+  font-size: 1.7rem;
+  font-weight: bold;
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  background-origin: 5px;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+}
+
+.add-button {
+  background-color: rgb(187, 137, 220);
+}
+
+.add-button:hover {
+  background-color: rgb(173, 122, 206);
+}
+
+.delete-button {
+  background-color: rgb(255, 152, 168);
+}
+
+.delete-button:hover {
+  background-color: rgb(233, 138, 153);
+}
+
+.move-button {
+  background-color: rgb(158, 228, 241);
+}
+
+.move-button:hover {
+  background-color: rgb(148, 209, 220);
+}
+
+input[type="text"] {
+  font-size: 1.6rem;
+  padding: 10px;
+  border: 2px solid black;
+  border-radius: 5px;
+  color: hsla(0, 0%, 0%, 0.5);
+}
+
+ol {
+  padding: 0;
+}
+
+li {
+  font-size: 2rem;
+    font-weight: bold;
+    padding: 15px;
+    background-color: hsl(0, 0%, 97%);
+    margin-bottom: 10px;
+    border: 3px solid black;
+    border-radius: 5px;
+    display: flex;
+    align-items: center
+}
+
+.text {
+  flex: 1;
+}
+
+.delete-button,
+.move-button {
+  padding: 8px 12px;
+  font-size: 1.4rem;
+  margin-left: 10px;
+}
+
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+}
+
+input[type="checkbox"]::before {
+  width: 20px;
+  height: 20px;
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  background-color: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 4px;
+}
+
+input[type="checkbox"]:checked::before {
+  background-color: transparent;
+}
+
+
+.input-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+.completed {
+  text-decoration: line-through;
+}
+.uncompleted-button {
+  margin-right: 5rem;
+  background-color: rgb(232, 138, 138)
+}
+.completed-button {
+  margin-left: 5rem;
+  background-color: rgb(144, 230, 195)
+}
