@@ -39,7 +39,7 @@ function Profile() {
         <button className="edit-profile-button" onClick={goToEditProfile}>Edit Profile</button>
         {/* Button to go back to todo list page */}
         <button className="back-to-todo-button" onClick={goToTodoList}>
-          
+          Back to To Do List 
         </button>
       </div>
     </div>
