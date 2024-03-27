@@ -1,16 +1,45 @@
 import React, { useEffect, useState } from "react";
 import { getDocs, collection } from "firebase/firestore";
-import { firestore } from "./firebase";
+import { firestore, auth } from "./firebase"; // Import Firebase authentication
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
 
-function Header() {
+function UserProfile({ user }) {
+  const profileIcon = './assets/kuromi.jpg'; // Define profileIcon here
   return (
-    <div className="header">
-      <p>Name: Vania Agnes Djunaedy ⋆˚🐾˖°</p>
-      <p>NIM: 2602158531 ⋆˙⟡♡ </p>
-      <p>Class: L4BC ⋆૮₍´˶• . • ⑅ ₎ა </p>
+    <div className="user-profile">
+      <div className="user-details">
+        <span className="email">{user?.email}</span>
+      </div>
+      <img src={user?.photoURL || profileIcon} alt="Profile" className="profile-img" />
     </div>
   );
 }
+
+
+function Header() {
+const [user] = useAuthState(auth);
+const navigate = useNavigate();
+
+const handleProfileClick = () => {
+  navigate("/profile"); // Navigate to the Profile.jsx page
+};
+return (
+  <div className="header">
+    <button className="profile-button" onClick={handleProfileClick}>
+        <UserProfile user={user} />
+      </button>
+    
+    <div className="user-details">
+      <p>Name: Vania Agnes Djunaedy ⋆˚🐾˖°</p>
+      <p>NIM: 2602158531 ⋆˙⟡♡</p>
+      <p>Class: L4BC ⋆૮₍´˶• . • ⑅ ₎ა</p>
+    </div>
+  </div>
+);
+}
+
+
 
 function ToDoList() {
   const [tasks, setTasks] = useState([]);
@@ -167,13 +196,13 @@ function ToDoList() {
                     className="move-button"
                     onClick={() => moveTaskUp(index)}
                   >
-                    ⬆️
+                    ⬆
                   </button>
                   <button
                     className="move-button"
                     onClick={() => moveTaskDown(index)}
                   >
-                    ⬇️
+                    ⬇
                   </button>
                 </div>
               </li>
@@ -184,12 +213,24 @@ function ToDoList() {
 }
 
 export default function App() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Listen for authentication state changes
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+
+    return () => {
+      unsubscribe(); // Cleanup the listener on unmount
+    };
+  }, []);
+
   return (
     <div>
-      <Header />
+      <Header user={user} />
       <ToDoList />
     </div>
   );
 }
-
 
