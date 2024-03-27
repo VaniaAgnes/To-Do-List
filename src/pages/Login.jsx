@@ -3,7 +3,7 @@ import { auth } from "../firebase"; // Correct the import path
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth"; // Import useSignInWithGoogle hook
-import googleIcon from "../assets/google.jpg"; // Import Google icon image
+import GoogleIcon from "../assets/google.jpg"; // Import Google icon image
 import "./styles.css";
 
 const Login = () => {
@@ -14,7 +14,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState(""); // State variable to track login error
 
-  // Use the useSignInWithGoogle hook
+  
   const [signInWithGoogle] = useSignInWithGoogle(auth);
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -31,7 +31,7 @@ const Login = () => {
 
   const handleGoogleLogin = async () => {
     try {
-      await signInWithGoogle(); // Call the signInWithGoogle function to start the login process
+      await signInWithGoogle(); 
       // If login is successful, navigate to the to-do list
       console.log("User registered with Google");
       navigate("/todolist");
@@ -65,11 +65,14 @@ const Login = () => {
             required
           />
         </div>
-        {loginError && <div className="error-message">{loginError}</div>} {/* Render login error message */}
-        <button type="submit" className="submit-button">Login</button>
+        {loginError && <div className="error-message">{loginError}</div>}{" "}
+        {/* Render login error message */}
+        <button type="submit" className="submit-button">
+          Login
+        </button>
       </form>
       <button onClick={handleGoogleLogin} className="google-login-button">
-        <img src={googleIcon} alt="Google Icon" className="google-icon" />
+        <img src={GoogleIcon} alt="Google Icon" className="google-icon" />
       </button>
     </div>
   );

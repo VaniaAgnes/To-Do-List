@@ -1,45 +1,54 @@
 import React, { useEffect, useState } from "react";
-import { getDocs, collection } from "firebase/firestore";
+import {
+  getDocs,
+  collection,
+  addDoc,
+  deleteDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import { firestore, auth } from "./firebase"; // Import Firebase authentication
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
+import ProfileIcon from "./assets/kuromi.jpg";
+import toast from "react-hot-toast";
 
 function UserProfile({ user }) {
-  const profileIcon = './assets/kuromi.jpg'; // Define profileIcon here
   return (
     <div className="user-profile">
       <div className="user-details">
         <span className="email">{user?.email}</span>
       </div>
-      <img src={user?.photoURL || profileIcon} alt="Profile" className="profile-img" />
+      {!user?.photoURL ? (
+        <img src={ProfileIcon} className="profile-img" />
+      ) : (
+        <img src={user?.photoURL} className="profile-img" />
+      )}
     </div>
   );
 }
 
-
 function Header() {
-const [user] = useAuthState(auth);
-const navigate = useNavigate();
+  const [user] = useAuthState(auth);
+  const navigate = useNavigate();
 
-const handleProfileClick = () => {
-  navigate("/profile"); // Navigate to the Profile.jsx page
-};
-return (
-  <div className="header">
-    <button className="profile-button" onClick={handleProfileClick}>
+  const handleProfileClick = () => {
+    navigate("/profile"); // Navigate to the Profile.jsx page
+  };
+  return (
+    <div className="header">
+      <button className="profile-button" onClick={handleProfileClick}>
         <UserProfile user={user} />
       </button>
-    
-    <div className="user-details">
-      <p>Name: Vania Agnes Djunaedy ⋆˚🐾˖°</p>
-      <p>NIM: 2602158531 ⋆˙⟡♡</p>
-      <p>Class: L4BC ⋆૮₍´˶• . • ⑅ ₎ა</p>
+
+      <div className="user-details">
+        <p>Name: Vania Agnes Djunaedy ⋆˚🐾˖°</p>
+        <p>NIM: 2602158531 ⋆˙⟡♡</p>
+        <p>Class: L4BC ⋆૮₍´˶• . • ⑅ ₎ა</p>
+      </div>
     </div>
-  </div>
-);
+  );
 }
-
-
 
 function ToDoList() {
   const [tasks, setTasks] = useState([]);
@@ -61,6 +70,45 @@ function ToDoList() {
     setTasks(tasksData);
   }
 
+  async function addTodo({ text }) {
+    const docRef = await addDoc(collection(firestore, "todos"), {
+      text,
+      completed: false,
+    });
+
+    console.log(docRef.id);
+  }
+
+  async function deleteTodo(id) {
+    const docRef = doc(firestore, "todos", id);
+
+    await deleteDoc(docRef);
+  }
+
+  async function updateTodo({ id, text, completed }) {
+    const docRef = doc(firestore, "todos", id);
+
+    await updateDoc(docRef, {
+      text,
+      completed,
+    });
+  }
+
+  async function editTask(id, newText) {
+    const taskRef = doc(firestore, "todos", id);
+    await updateDoc(taskRef, { text: newText });
+    fetchTodos(); // Refresh the task list after editing a task
+  }
+
+  // edit text of the task
+  /*
+  
+  function editTask(task) {
+    updateTodo(task)
+  }
+  
+  */
+
   // This useEffect will trigger the code to be executed the very time
   // the website is loaded. (there are additonal concept to this actually.)
   useEffect(() => {
@@ -73,28 +121,26 @@ function ToDoList() {
   }
 
   function addTask() {
-    if (newTask.trim() !== "") {
-      setTasks((prevTasks) => [
-        ...prevTasks,
-        { id: Date.now(), text: newTask, completed: false },
-      ]);
-      setNewTask("");
+    if (newTask.trim().length === 0) {
+      toast.error("Please input the new task title");
+      return;
     }
+    addTodo({ text: newTask });
+    setNewTask("");
+    fetchTodos();
   }
 
-  function handleCheckboxChange(id) {
-    setTasks((prevTasks) => {
-      return prevTasks.map((task) => {
-        if (task.id === id) {
-          return { ...task, completed: !task.completed };
-        }
-        return task;
-      });
+  function handleTaskStatus(task) {
+    updateTodo({
+      ...task,
+      completed: !task.completed,
     });
+    fetchTodos();
   }
 
   function deleteTask(id) {
-    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+    deleteTodo(id);
+    fetchTodos();
   }
 
   function moveTaskUp(index) {
@@ -128,6 +174,7 @@ function ToDoList() {
   const filteredTasks = tasks.filter((task) =>
     task.text.toLowerCase().includes(filter.toLowerCase())
   );
+
   const uncompletedTasks = filteredTasks.filter((task) => !task.completed);
   const completedTasks = filteredTasks.filter((task) => task.completed);
 
@@ -172,7 +219,7 @@ function ToDoList() {
                 <input
                   type="checkbox"
                   checked
-                  onChange={() => handleCheckboxChange(task.id)}
+                  onChange={() => handleTaskStatus(task)}
                 />
                 <span className="text">{task.text}</span>
               </li>
@@ -182,7 +229,7 @@ function ToDoList() {
                 <input
                   type="checkbox"
                   checked={task.completed}
-                  onChange={() => handleCheckboxChange(task.id)}
+                  onChange={() => handleTaskStatus(task)}
                 />
                 <span className="text">{task.text}</span>
                 <div>
@@ -191,6 +238,17 @@ function ToDoList() {
                     onClick={() => deleteTask(task.id)}
                   >
                     🗑️
+                  </button>
+                  <button
+                    className="edit-button"
+                    onClick={() => {
+                      const newText = prompt("Enter new task title:", task.text);
+                      if (newText !== null) {
+                        editTask(task.id, newText);
+                      }
+                    }}
+                  >
+                    ✏️
                   </button>
                   <button
                     className="move-button"
@@ -216,13 +274,13 @@ export default function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Listen for authentication state changes
+    
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
     });
 
     return () => {
-      unsubscribe(); // Cleanup the listener on unmount
+      unsubscribe(); 
     };
   }, []);
 
@@ -233,4 +291,3 @@ export default function App() {
     </div>
   );
 }
-

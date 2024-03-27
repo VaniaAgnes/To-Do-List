@@ -1,28 +1,34 @@
+* {
+  font-family: "Roboto", sans-serif;
+}
+
 .header {
   display: flex;
-  justify-content: space-between; /* Align items horizontally */
-  align-items: center; /* Align items vertically */
-  background-color: #f8e6fa; /* Light purple background color */
-  padding: 10px; /* Reduced padding */
-  border-radius: 15px; /* Smaller border radius */
-  font-family: 'Roboto', sans-serif; 
-  font-size: 1rem; 
-  color: #333; 
-  font-weight: bold; 
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8e6fa;
+  padding: 10px;
+  border-radius: 15px;
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  color: #333;
+  font-weight: bold;
 }
+
 body {
   background-color: rgb(232, 193, 246);
 }
 
 .to-do-list {
-  font-family: 'Cute', sans-serif;
+  font-family: "Cute", sans-serif;
   text-align: center;
   margin-top: 100px;
 }
 
 h1 {
-  font-size: 4rem;
+  font-size: 100px;
   color: black;
+  font-family: "Cute";
 }
 
 button {
@@ -49,7 +55,7 @@ button {
 }
 
 .delete-button:hover {
-  background-color: rgb(204, 114, 246);
+  background-color: rgb(111, 55, 137);
 }
 
 .move-button {
@@ -58,6 +64,14 @@ button {
 
 .move-button:hover {
   background-color: rgb(163, 103, 171);
+}
+
+.edit-button {
+  background-color: rgb(213, 136, 247);
+}
+
+.edit-button:hover {
+  background-color: rgb(134, 41, 148);
 }
 
 input[type="text"] {
@@ -74,14 +88,14 @@ ol {
 
 li {
   font-size: 2rem;
-    font-weight: bold;
-    padding: 15px;
-    background-color: hsl(0, 0%, 97%);
-    margin-bottom: 10px;
-    border: 3px solid black;
-    border-radius: 5px;
-    display: flex;
-    align-items: center
+  font-weight: bold;
+  padding: 15px;
+  background-color: hsl(0, 0%, 97%);
+  margin-bottom: 10px;
+  border: 3px solid black;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
 }
 
 .text {
@@ -89,7 +103,8 @@ li {
 }
 
 .delete-button,
-.move-button {
+.move-button,
+.edit-button {
   padding: 8px 12px;
   font-size: 1.4rem;
   margin-left: 10px;
@@ -103,7 +118,7 @@ input[type="checkbox"] {
 input[type="checkbox"]::before {
   width: 20px;
   height: 20px;
-  content: '';
+  content: "";
   display: inline-block;
   vertical-align: middle;
   background-color: #ffffff;
@@ -115,24 +130,27 @@ input[type="checkbox"]:checked::before {
   background-color: rgb(127, 59, 135);
 }
 
-
 .input-container {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
   justify-content: space-between;
 }
+
 .completed {
   text-decoration: line-through;
 }
+
 .uncompleted-button {
   margin-right: 5rem;
-  background-color: rgb(210, 119, 228)
+  background-color: rgb(210, 119, 228);
 }
+
 .completed-button {
   margin-left: 5rem;
-  background-color: rgb(222, 128, 231)
+  background-color: rgb(222, 128, 231);
 }
+
 .user-profile {
   display: flex;
   flex-direction: column;
@@ -140,11 +158,11 @@ input[type="checkbox"]:checked::before {
 }
 
 .profile-img {
-  width: 70px; /* Adjust the size of the profile picture */
+  width: 70px;
   height: 70px;
-  border-radius: 50%; /* Make the image circular */
+  border-radius: 50%;
   margin-top: 10px;
-  margin-bottom: 10px; /* Add space between the picture and email */
+  margin-bottom: 10px;
 }
 
 .user-details {
@@ -154,9 +172,10 @@ input[type="checkbox"]:checked::before {
 }
 
 .email {
-  font-size: 1rem; /* Font size for email */
-  color: #000000; /* Text color for email */
+  font-size: 1rem;
+  color: #000000;
 }
+
 .profile-button {
   background: none;
   border: none;

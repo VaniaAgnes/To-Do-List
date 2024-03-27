@@ -2,10 +2,20 @@ import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 import profileIcon from "../assets/kuromi.jpg";
+import { useNavigate } from "react-router-dom";
 import "./styles.css";
 
 function Profile() {
   const [user] = useAuthState(auth);
+  const navigate = useNavigate();
+
+  const goToEditProfile = () => {
+    navigate("/edited-profile");
+  };
+
+  const goToTodoList = () => {
+    navigate("/todolist");
+  };
 
   return (
     <div className="container">
@@ -26,9 +36,15 @@ function Profile() {
           {/* Displays the user's display name if available, otherwise displays "Anonymous" */}
           <p>Name: {user?.displayName || "Anonymous"}</p>
         </div>
+        <button className="edit-profile-button" onClick={goToEditProfile}>Edit Profile</button>
+        {/* Button to go back to todo list page */}
+        <button className="back-to-todo-button" onClick={goToTodoList}>
+          
+        </button>
       </div>
     </div>
   )
 }
   
 export default Profile;
+
